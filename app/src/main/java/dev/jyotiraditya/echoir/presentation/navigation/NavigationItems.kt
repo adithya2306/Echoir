@@ -5,23 +5,23 @@ import dev.jyotiraditya.echoir.R
 data class NavigationItem(
     val route: String,
     val icon: Int,
-    val label: String
+    val label: Int
 )
 
 val navigationItems = listOf(
     NavigationItem(
         route = Route.Home.path,
         icon = R.drawable.ic_home,
-        label = "Home"
+        label = R.string.search
     ),
     NavigationItem(
         route = Route.Search.Main.path,
         icon = R.drawable.ic_search,
-        label = "Search"
+        label = R.string.search
     ),
     NavigationItem(
         route = Route.Settings.path,
         icon = R.drawable.ic_settings,
-        label = "Settings"
+        label = R.string.settings
     )
 )

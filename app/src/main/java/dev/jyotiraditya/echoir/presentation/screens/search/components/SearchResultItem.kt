@@ -13,11 +13,13 @@ import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.painterResource
+import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextOverflow
 import androidx.compose.ui.unit.dp
 import dev.jyotiraditya.echoir.R
 import dev.jyotiraditya.echoir.domain.model.SearchResult
 import dev.jyotiraditya.echoir.presentation.components.TrackCover
+import java.util.Locale
 
 @Composable
 fun SearchResultItem(
@@ -31,15 +33,16 @@ fun SearchResultItem(
                 Text(
                     text = formats.mapNotNullTo(mutableSetOf()) {
                         when (it) {
-                            "HIRES_LOSSLESS" -> "HI-RES"
-                            "LOSSLESS" -> "LOSSLESS"
-                            "DOLBY_ATMOS" -> "DOLBY"
-                            "HIGH", "LOW" -> "AAC"
+                            "HIRES_LOSSLESS" -> stringResource(R.string.hires_short)
+                            "LOSSLESS" -> stringResource(R.string.lossless_short)
+                            "DOLBY_ATMOS" -> stringResource(R.string.dolby)
+                            "HIGH", "LOW" -> stringResource(R.string.aac)
                             else -> null
                         }
+                            ?.uppercase(Locale.getDefault())
                     }.apply {
                         if (formats.any { it == "HIRES_LOSSLESS" || it == "LOSSLESS" }) {
-                            add("AAC")
+                            add(stringResource(R.string.aac))
                         }
                     }.joinToString(" / "),
                     style = MaterialTheme.typography.labelSmall,
@@ -81,7 +84,7 @@ fun SearchResultItem(
                 if (result.explicit) {
                     Icon(
                         painter = painterResource(R.drawable.ic_explicit),
-                        contentDescription = "Explicit",
+                        contentDescription = stringResource(R.string.explicit),
                         modifier = Modifier.size(16.dp),
                     )
                 }
@@ -89,7 +92,7 @@ fun SearchResultItem(
                     if (formats.contains("DOLBY_ATMOS")) {
                         Icon(
                             painter = painterResource(R.drawable.ic_dolby),
-                            contentDescription = "Dolby Atmos",
+                            contentDescription = stringResource(R.string.dolby_atmos),
                             modifier = Modifier.size(16.dp)
                         )
                     }
