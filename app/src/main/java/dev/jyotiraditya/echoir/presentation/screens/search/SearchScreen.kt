@@ -255,7 +255,7 @@ fun SearchScreen(
                 FlowRow(
                     horizontalArrangement = Arrangement.spacedBy(8.dp)
                 ) {
-                    SearchQuality.entries.forEach { quality ->
+                    viewModel.searchQualities.forEach { quality ->
                         var selected by remember {
                             mutableStateOf(state.searchFilter.qualities.contains(quality))
                         }

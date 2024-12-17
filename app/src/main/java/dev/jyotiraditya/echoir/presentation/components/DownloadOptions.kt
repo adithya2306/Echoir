@@ -64,6 +64,7 @@ fun DownloadOptions(
             }
         }
     }
+        .filter { it.isSupported() }
 
     Column(
         verticalArrangement = Arrangement.spacedBy(8.dp)

@@ -1,5 +1,10 @@
 package dev.jyotiraditya.echoir.domain.model
 
+import android.media.MediaCodecList
+import android.media.MediaCodecList.ALL_CODECS
+import android.media.MediaFormat
+import android.media.MediaFormat.MIMETYPE_AUDIO_AC4
+import android.media.MediaFormat.MIMETYPE_AUDIO_EAC3_JOC
 import dev.jyotiraditya.echoir.R
 
 sealed class QualityConfig(
@@ -52,4 +57,23 @@ sealed class QualityConfig(
         ac4 = true,
         summary = R.string.dolby_ac4_summary
     )
+
+    fun isSupported(): Boolean =
+        when (this) {
+            DolbyAtmosAC3 -> isDecoderPresent(MIMETYPE_AUDIO_EAC3_JOC)
+            DolbyAtmosAC4 -> isDecoderPresent(MIMETYPE_AUDIO_AC4)
+            else -> true
+        }
+
+    private fun isDecoderPresent(mimeType: String): Boolean =
+        MediaCodecList(ALL_CODECS)
+            .codecInfos
+            .any { codecInfo ->
+                !codecInfo.isEncoder && codecInfo.supportedTypes.contains(mimeType)
+            }
+
+    companion object {
+        private const val MIMETYPE_AUDIO_EAC3_JOC = "audio/eac3-joc"
+        private const val MIMETYPE_AUDIO_AC4 = "audio/ac4"
+    }
 }

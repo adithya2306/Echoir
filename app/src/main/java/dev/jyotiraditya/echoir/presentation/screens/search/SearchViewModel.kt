@@ -23,6 +23,14 @@ class SearchViewModel @Inject constructor(
     private val _state = MutableStateFlow(SearchState())
     val state: StateFlow<SearchState> = _state.asStateFlow()
 
+    val searchQualities = SearchQuality.entries.filter {
+        when (it.format) {
+            "DOLBY_ATMOS" -> QualityConfig.DolbyAtmosAC3.isSupported() ||
+                    QualityConfig.DolbyAtmosAC4.isSupported()
+            else -> true
+        }
+    }
+
     fun onQueryChange(query: String) {
         _state.update {
             it.copy(
